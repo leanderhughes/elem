@@ -1,0 +1,43 @@
+<html>
+ <head>
+ <title>Elem.js Demo</title>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+  <script src="elem.js"></script>
+ </head>
+ <body>
+ 
+  <script>
+    var elem = new Elem();
+    var content = elem.as(
+    'div#parent',
+    'h1>Here is a heading!',
+    {
+      div:{
+        innerHTML:"I'm a div with blue text "
+      }
+    },
+    1,
+    {
+      span:{
+        innerHTML: "I'm a span inside the div. Click on me, to make something happen.",
+        onclick:function(){
+          alert('something happened');
+        }
+      }
+    },
+    -1,
+    {
+      p:{
+        innerHTML:"I'm a paragraph, not inside of the div above. After I load, I'll let you know my dimensions.",
+        callback:function(el){
+          alert(JSON.stringify(el.getBoundingClientRec()));
+        }
+      }
+    },
+    'table',
+    'tr',
+    'td>tables do not need 1s and -1s for nesting trs and tds',
+    ).to(document.body);
+  </script>
+ </body>
+</html>
