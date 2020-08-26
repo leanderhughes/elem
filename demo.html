@@ -42,15 +42,25 @@
     -1,
     {
       p:{
-        innerHTML:"I'm a paragraph, not inside of the div above. After I load, I'll let you know my dimensions.",
+        innerHTML:"I'm a paragraph, not inside of the div above. After I load, I'll let you know my x and y positions. ",
         callback:function(el){
-          alert(JSON.stringify(el.getBoundingClientRect()));
+          var rect = el.getBoundingClientRect();
+          $(el).after('x:'+rect.x+', y: '+rect.y+')');
         }
       }
     },
     'table',
     'tr',
-    'td>tables do not need 1s and -1s for nesting trs and tds',
+     {
+      td:{
+       colspan:3,
+       innerHTML:"Tables do not need the 1s and -1s to nest"
+      }
+     },
+     'tr',
+     'td>TRs',
+     'td>TDs',
+     'td>THs'
     ).to(document.body);
   </script>
  </body>
