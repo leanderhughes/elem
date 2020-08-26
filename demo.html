@@ -1,3 +1,4 @@
+
 <html>
  <head>
  <title>Elem.js Demo</title>
@@ -8,12 +9,16 @@
      width: 600px;
      margin: 30px auto;
      display: table;
-    }  
+    }
+    .bordered {
+      border: 1px solid gray;
+    }
   </style>
  </head>
  <body>
- 
+
   <script>
+    var derp = '';
     var elem = new Elem();
     var content = elem.as(
     'div#parent',
@@ -49,11 +54,11 @@
         }
       }
     },
-    'table',
+    'table.bordered',
     'tr',
      {
       td:{
-       style:{colspan: "3"},
+        colspan:3,
        innerHTML:"Tables do not need the 1s and -1s to nest the following"
       }
      },
