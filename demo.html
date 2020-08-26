@@ -10,6 +10,9 @@
      margin: 30px auto;
      display: table;
     }
+    table {
+      border-collapse:collapse;
+    }
     .bordered td {
       border: 1px solid gray;
     }
@@ -50,7 +53,7 @@
         innerHTML:'I\'m a paragraph, not inside of the div above. After I load, I\'ll let you know my x and y positions. <span id="positions"></span>',
         callback:function(el){
           var rect = el.getBoundingClientRect();
-          $('#positions').html('(x:'+rect.x+', y: '+rect.y+')');
+          $('#positions').html('(x: '+rect.x+', y: '+rect.y+')');
         }
       }
     },
