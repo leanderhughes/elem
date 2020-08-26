@@ -13,15 +13,22 @@
     'h1>Here is a heading!',
     {
       div:{
-        innerHTML:"I'm a div with blue text "
+        innerHTML:"I'm a div with bold text ",
+       style:{
+        fontWeight: 'bold'
+       }
       }
     },
     1,
     {
       span:{
         innerHTML: "I'm a span inside the div. Click on me, to make something happen.",
+       style:{
+        color: 'blue',
+        textDecoration:'underline'
+       },
         onclick:function(){
-          alert('something happened');
+          alert('Something is happening!');
         }
       }
     },
@@ -30,7 +37,7 @@
       p:{
         innerHTML:"I'm a paragraph, not inside of the div above. After I load, I'll let you know my dimensions.",
         callback:function(el){
-          alert(JSON.stringify(el.getBoundingClientRec()));
+          alert(JSON.stringify(el.getBoundingClientRect()));
         }
       }
     },
