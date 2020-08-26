@@ -42,10 +42,10 @@
     -1,
     {
       p:{
-        innerHTML:"I'm a paragraph, not inside of the div above. After I load, I'll let you know my x and y positions. ",
+        innerHTML:'I\'m a paragraph, not inside of the div above. After I load, I\'ll let you know my x and y positions. <span id="positions"></span>',
         callback:function(el){
           var rect = el.getBoundingClientRect();
-          $(el).after('x:'+rect.x+', y: '+rect.y+')');
+          $('#positions').html('(x:'+rect.x+', y: '+rect.y+')');
         }
       }
     },
@@ -53,8 +53,8 @@
     'tr',
      {
       td:{
-       colspan:3,
-       innerHTML:"Tables do not need the 1s and -1s to nest"
+       colspan: "3",
+       innerHTML:"Tables do not need the 1s and -1s to nest the following"
       }
      },
      'tr',
