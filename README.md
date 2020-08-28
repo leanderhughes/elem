@@ -5,4 +5,4 @@ Simply include elem.js in an html file after loading jquery, and it's ready to u
 
 Enjoy!
 
-(Created by <a href="http://www.leanderhughes.com">Leander S. Hughes</span></a> outside of his official university work.)
+(Created by <a href="http://www.leanderhughes.com">Leander S. Hughes</a> outside of his official university work.)
