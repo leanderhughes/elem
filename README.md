@@ -4,5 +4,3 @@ A simple js class for creating and deploying HTML elements (requires jquery). Ch
 Simply include elem.js in an html file after loading jquery, and it's ready to use.
 
 Enjoy!
-
-(Created by <a href="http://www.leanderhughes.com">Leander S. Hughes</a> outside of his official university work.)
