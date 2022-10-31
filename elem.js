@@ -73,6 +73,12 @@ class Elem{
           type = Object.keys(ob)[0];
           props = ob[type];
         }
+        !type && console.log('empty arg error coming',this.argsForErrors);
+        if(!type){
+          console.log('!type so div',{type,props});
+          type = 'div';
+        }
+        //if(!type){throw('type is empty... see above for args');};
         if(type.indexOf('.') > -1 || type.indexOf('#') >-1 || type.indexOf('>') > -1){
           props = {};
           const chars = type.split('');
@@ -101,9 +107,26 @@ class Elem{
             }
           }
         }
-        const el = document.createElement(type);
+        !type && console.log('elem.js no type so making it div',{type,props});
+        typeof type!='string' && console.log('type not string: ',type);
+        type = typeof type!='string' ? 'div' : type;
+        type = !type ? 'div' : type;
+        let el = '';
+        try{
+          el = document.createElement(type);
+        }
+        catch{
+          console.log('elem.js problem with type: ',{type,props});
+          el = document.createElement('div');
+        }
         if(!props)return el;
+        if(typeof props != 'object'){
+          console.log('elem.js props is not object',{props});
+          return el;
+        }
         for(let key in props){
+          key = key == 'text' ? 'innerHTML' : key;
+          props.innerHTML = props.text ? props.text : props.innerHTML;
           if(key==='style' || key==='l' || key==='callback'){
             continue;
           }
@@ -223,7 +246,7 @@ class Elem{
         let uses = false;
         for(let i=1,l=args.length;i<l;i++){
           if(args[i].el && args[i-1].el){
-            if(this.getTag(args[i-1].el)==='tr' && this.getTag(args[i].el)==='td'){
+            if(this.getTag(args[i-1].el)==='tr' && (this.getTag(args[i].el)==='td' || this.getTag(args[i].el)==='th')){
               return true;
             }
             if((this.getTag(args[i-1].el)==='ul' || this.getTag(args[i-1].el)==='ol') && this.getTag(args[i].el)==='li'){
@@ -237,7 +260,7 @@ class Elem{
         if(!argPre || !arg || !argPre.el || !arg.el){
           return curLev;
         }
-        const autoIncUp = {tr:'table',td:'tr',li:'ul'};
+        const autoIncUp = {tr:'table',td:'tr',th:'tr',li:'ul'};
         const autoIncUpAlt = {li:'ol'};
         const tag = this.getTag(arg.el);
         const preTag = this.getTag(argPre.el);
@@ -247,7 +270,7 @@ class Elem{
           this.argStepAutoLev[tag] = isNaN(this.argStepAutoLev[tag]) ? curLev : this.argStepAutoLev[tag];
           curLev = this.argStepAutoLev[tag];
         }
-        else if(preTag === 'td' && tag !== 'tr' && tag !== 'td'){
+        else if((preTag === 'td' || preTag === 'th') && tag !== 'tr' && (tag !== 'td' && tag !== 'th')){
           curLev = this.argStepAutoLev.td+1;
         }
         else if(preTag==='li' && tag!=='li'){
@@ -258,7 +281,7 @@ class Elem{
       parseBuildArgsWithSteps(args){
         const parsed = [];
         let curLev = 0;
-        const specialEls = {table:1,tr:1,td:1,ul:1,ol:1}
+        const specialEls = {table:1,tr:1,td:1,th:1,ul:1,ol:1}
         for(let i=0,l=args.length;i<l;i++){
           if(!isNaN(args[i])){
             continue;
@@ -311,14 +334,23 @@ class Elem{
         return els;
       }
       as(...args){
+        this.argsForErrors = args;
         if(Array.isArray(args[0])){
           return this.as(...args[0]);
         }
-        const el = this.build(...args)[0];
-        el.to = function(parent){
+        const els = this.build(...args);
+        const el = els[0];
+        el.i = function(index){
+          return els[index];
+        }
+        el.all = function(){
+          return els;
+        }
+        el.to = function(parent=document.body){
           parent.appendChild(el);
           return el;
         }
+        this.argsForErrors = '';
         return el;//this.build(...args)[0];
       }
       clear(el){
